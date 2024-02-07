@@ -12,12 +12,12 @@ def __is_pass_valid__(password):
 class SocialNetwork:
     def __init__(self, name):
         # Initialize the SocialNetwork class
-        self.name = name
-        self.users = set()  # Set that's contained all the user that's in the network
+        self.__name = name
+        self.__users = set()  # Set that's contained all the user that's in the network
 
     # Methods
     def __get_user_by_name__(self, name):
-        for user in self.users:
+        for user in self.__users:
             if name == user.get_name():
                 return user
         return None  # Return None if the user is not found
@@ -34,7 +34,7 @@ class SocialNetwork:
 
         # Else add the user to the network
         user = User(name, password, True)  # The user will be logged in
-        self.users.add(user)  # Add the user to this network
+        self.__users.add(user)  # Add the user to this network
 
     def log_out(self, name):
         user = self.__get_user_by_name__(name)
@@ -50,7 +50,7 @@ class SocialNetwork:
             user.user_log_in()  # If correct-> log in
 
     def __is_user_exist__(self, user_name):
-        for user in self.users:
+        for user in self.__users:
             if user_name == user.get_name():
                 return True
         return False
