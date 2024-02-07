@@ -1,6 +1,13 @@
-class ImagePost:
-    def __init__(self):
-        super().__init__()
+from Post import Post
 
-    def show_pic(self):
+
+class ImagePost(Post):
+    def __init__(self, user, path):
+        super().__init__(user, path)
+
+
+    def display(self):
         return  # Fill
+
+    def __str__(self):
+        return "{0} posted a picture:\n".format(self.get_publisher().get_name())

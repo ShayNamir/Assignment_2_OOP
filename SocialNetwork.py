@@ -13,7 +13,8 @@ class SocialNetwork:
     def __init__(self, name):
         # Initialize the SocialNetwork class
         self.__name = name
-        self.__users = set()  # Set that's contained all the user that's in the network
+        self.__users = []  # Set that's contained all the user that's in the network
+        print("the social network {0} was created!".format(name))
 
     # Methods
     def __get_user_by_name__(self, name):
@@ -34,7 +35,8 @@ class SocialNetwork:
 
         # Else add the user to the network
         user = User(name, password, True)  # The user will be logged in
-        self.__users.add(user)  # Add the user to this network
+        self.__users.append(user)  # Add the user to this network
+        return user
 
     def log_out(self, name):
         user = self.__get_user_by_name__(name)
@@ -54,3 +56,9 @@ class SocialNetwork:
             if user_name == user.get_name():
                 return True
         return False
+
+    def __str__(self):
+        ans = "{0} social network: \n".format(self.__name)
+        for user in self.__users:
+            ans += str(user) + "\n"
+        return ans

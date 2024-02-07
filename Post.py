@@ -9,7 +9,7 @@ class Post:
         self.__comments = []  # Initial the comment set
 
     def __str__(self):
-        return "hello"
+        return self.__content
 
     def comment(self, user, text):
         c = Comment(self, text, user)
@@ -17,3 +17,6 @@ class Post:
 
     def get_publisher(self):
         return self.__publisher
+
+    def like(self, user):
+        self.__likes.add(user)
