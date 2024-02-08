@@ -14,7 +14,7 @@ class SocialNetwork:
         # Initialize the SocialNetwork class
         self.__name = name
         self.__users = []  # Set that's contained all the user that's in the network
-        print("the social network {0} was created!".format(name))
+        print("The social network {0} was created!".format(name))
 
     # Methods
     def __get_user_by_name__(self, name):
@@ -58,7 +58,7 @@ class SocialNetwork:
         return False
 
     def __str__(self):
-        ans = "{0} social network: \n".format(self.__name)
+        ans = "{0} social network:\n".format(self.__name)
         for user in self.__users:
             ans += str(user) + "\n"
         return ans

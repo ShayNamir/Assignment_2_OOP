@@ -47,7 +47,7 @@ class User:
             initial_length = len(user.__get_followers())
             user.__followers.discard(self)  # If self doesn't exist in user.__followers -> do nothing
             if len(user.__get_followers()) < initial_length:  # Check if the new user is added
-                print("{0} unfollow {1}".format(self.get_name(), user.get_name()))
+                print("{0} unfollowed {1}".format(self.get_name(), user.get_name()))
 
     def user_log_in(self):
         self.__is_log_in = True
