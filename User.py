@@ -33,11 +33,10 @@ class User:
             initial_length = len(user.__get_followers())
             user.__add_follower(self)
             if len(user.__get_followers()) > initial_length:  # Check if the new user is added
-                self.add_notifications("{0} started following {1}".format(self.get_name(), user.get_name()))
-                self.print_last_not()
+                print("{0} started following {1}".format(self.get_name(), user.get_name()))
 
-    def print_last_not(self):
-        print(self.__notifications[len(self.__notifications) - 1])
+    def get_last_not(self):
+        return self.__notifications[len(self.__notifications) - 1]
 
     '''
     This function will get a user and remove the follow from him, if exist 
@@ -45,7 +44,10 @@ class User:
 
     def unfollow(self, user):
         if self.__is_log_in:  # Check if the user is logged in.
+            initial_length = len(user.__get_followers())
             user.__followers.discard(self)  # If self doesn't exist in user.__followers -> do nothing
+            if len(user.__get_followers()) < initial_length:  # Check if the new user is added
+                print("{0} unfollow {1}".format(self.get_name(), user.get_name()))
 
     def user_log_in(self):
         self.__is_log_in = True
@@ -83,9 +85,22 @@ class User:
         return post
 
     def print_notifications(self):
-        print("FILL")
+        print("{0}'s notifications:".format(self.get_name()))
+        for notification in self.__notifications:
+            print(notification)
 
     def __str__(self):
         ans = "User name: {0}, Number of posts: {1}, Number of followers: {2}".format(self.__name, self.__posts_num,
                                                                                       len(self.__followers))
         return ans
+
+    def __eq__(self, other) -> bool:
+        if isinstance(other, User):
+            return self.get_name() == other.get_name()  # Can't be two users with the same name
+        return False
+
+    def __ne__(self, other) -> bool:
+        return not self.__eq__(other)
+
+    def __hash__(self):
+        return hash(self.__name)

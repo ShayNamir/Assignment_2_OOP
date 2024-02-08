@@ -29,7 +29,7 @@ class SalePost(Post):
         return super().get_publisher()
 
     def __str__(self):
-        ans = "{0} posted a product for sale:'n".format(self.get_publisher().get_name())
+        ans = "{0} posted a product for sale:\n".format(self.get_publisher().get_name())
         if self.__is_av:
             ans += "For sale! "
         else:

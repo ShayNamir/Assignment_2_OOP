@@ -7,7 +7,7 @@ class ImagePost(Post):
 
 
     def display(self):
-        return  # Fill
+        print("Shows picture")
 
     def __str__(self):
         return "{0} posted a picture:\n".format(self.get_publisher().get_name())
