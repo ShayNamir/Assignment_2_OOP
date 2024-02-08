@@ -13,7 +13,7 @@ class SalePost(Post):
         if not self.get_publisher().check_pass(password):
             return
         self.__is_av = False
-        print("{0} product is sold:".format(self.get_publisher().get_name))
+        print("{0}'s product is sold:".format(self.get_publisher().get_name()))
 
     def discount(self, percent, password):
         # Mast provide a password to do it
@@ -23,7 +23,7 @@ class SalePost(Post):
         d -= 1
         d = abs(d)
         self.__price *= d
-        print("Discount on {0} product! the new price is: {1}\n".format(self.get_publisher().get_name, self.__price))
+        print("Discount on {0} product! the new price is: {1}\n".format(self.get_publisher().get_name(), self.__price))
 
     def get_publisher(self):
         return super().get_publisher()
