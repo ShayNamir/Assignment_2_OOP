@@ -22,9 +22,8 @@ class Post:
         author = self.get_publisher()
         if author != user:
             author.add_notifications("{0} commented on your post".format(user.get_name()))
-            print("notification to {0}: {1}: {2}".format(author.get_name(), author.get_last_not(), c.get_content()))  # Print in the same line
-
-
+            print("notification to {0}: {1}: {2}".format(author.get_name(), author.get_last_not(),
+                                                         c.get_content()))  # Print in the same line
 
     def get_publisher(self):
         return self.__publisher
@@ -39,4 +38,3 @@ class Post:
         if author != user:
             author.add_notifications("{0} liked your post".format(user.get_name()))
             print("notification to {0}: {1}".format(author.get_name(), author.get_last_not()))  # Print in the same line
-

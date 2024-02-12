@@ -10,11 +10,22 @@ def __is_pass_valid__(password):
 
 
 class SocialNetwork:
+    """
+    This class using the Singleton Design pattern
+    """
+    _instance = None
+
+    def __new__(cls, name):
+        if not cls._instance:
+            cls._instance = super(SocialNetwork, cls).__new__(cls)
+        return cls._instance
+
     def __init__(self, name):
-        # Initialize the SocialNetwork class
-        self.__name = name
-        self.__users = []  # Set that's contained all the user that's in the network
-        print("The social network {0} was created!".format(name))
+        if not hasattr(self, '_initialized'):
+            self.__name = name
+            self.__users = []  # Set that contains all the users in the network
+            print("The social network {0} was created!".format(name))
+            self._initialized = True
 
     # Methods
     def __get_user_by_name__(self, name):
