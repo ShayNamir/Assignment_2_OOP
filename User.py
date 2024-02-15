@@ -1,6 +1,8 @@
 """
 Do we need to check for existing username before adding?
 """
+from abc import ABC, abstractmethod
+
 from ImagePost import ImagePost
 from SalePost import SalePost
 from TextPost import TextPost
@@ -25,7 +27,7 @@ class User:
     def __get_followers(self):
         return self.__followers
 
-    def add_notifications(self, text):
+    def add_notification(self, text):
         self.__notifications.append(text)
 
     def follow(self, user):
@@ -66,23 +68,19 @@ class User:
         return False
 
     def publish_post(self, typ, content, price=None, loc=None):
-        if typ == "Text":
-            post = TextPost(self, content)
-        elif typ == "Image":
-            post = ImagePost(self, content)
-        elif typ == "Sale":
-            post = SalePost(self, content, price, loc)
+        post = PostFactory.create_post(self, typ, content, price, loc)  # Create a post using a factory design pattern
+        if post:
+            self.__posts_num += 1
+
+            # Send a notification to all followers
+            for user in self.__followers:
+                user.add_notification("{0} has a new post".format(self.get_name()))
+
+            # Print the post-details
+            print(post)
+            return post
         else:
             return None  # Error
-        self.__posts_num += 1
-
-        # Sent a notification to all followers
-        for user in self.__followers:
-            user.add_notifications("{0} has a new post".format(self.get_name()))
-
-        # Print the post-details
-        print(post)
-        return post
 
     def print_notifications(self):
         print("{0}'s notifications:".format(self.get_name()))
@@ -104,3 +102,23 @@ class User:
 
     def __hash__(self):
         return hash(self.__name)
+
+
+# This class using the Factory Design pattern to create a post
+class PostFactory:
+    @staticmethod
+    def create_post(user, typ, content, price=None, loc=None):
+        if typ == "Text":
+            return TextPost(user, content)
+        elif typ == "Image":
+            return ImagePost(user, content)
+        elif typ == "Sale":
+            return SalePost(user, content, price, loc)
+        else:
+            return None  # Error
+
+
+class Member(ABC):  # observer interface
+    @abstractmethod
+    def update(self, content):
+        pass
