@@ -32,10 +32,11 @@ class User:
 
     def follow(self, user):
         if self.__is_log_in:  # Check if the user is logged in
-            initial_length = len(user.__get_followers())
-            user.__add_follower(self)
-            if len(user.__get_followers()) > initial_length:  # Check if the new user is added
-                print("{0} started following {1}".format(self.get_name(), user.get_name()))
+            if self != user:  # Can't follow yourself
+                initial_length = len(user.__get_followers())
+                user.__add_follower(self)
+                if len(user.__get_followers()) > initial_length:  # Check if the new user is added
+                    print("{0} started following {1}".format(self.get_name(), user.get_name()))
 
     def get_last_not(self):
         return self.__notifications[len(self.__notifications) - 1]
