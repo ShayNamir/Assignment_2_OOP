@@ -1,7 +1,4 @@
-"""
-Do we need to check for existing username before adding?
-"""
-from abc import ABC, abstractmethod
+
 
 from ImagePost import ImagePost
 from SalePost import SalePost
@@ -12,7 +9,7 @@ class User:
     def __init__(self, name, password, is_in):
         self.__name = name
         self.__password = password
-        self.__followers = set()  # Initialize an empty set for followers
+        self.__followers = set()  # this is the observer set
         self.__is_log_in = is_in
         self.__posts_num = 0
         self.__notifications = []
@@ -84,9 +81,8 @@ class User:
         if post:
             self.__posts_num += 1
 
-            # Send a notification to all followers
-            for user in self.__followers:
-                user.add_notification("{0} has a new post".format(self.get_name()))
+            # Send a notification to all followers using the observer pattern
+            self.notify_observers()
 
             # Print the post-details
             print(post)
@@ -130,7 +126,4 @@ class PostFactory:
             return None  # Error
 
 
-class Member(ABC):  # observer interface
-    @abstractmethod
-    def update(self, content):
-        pass
+
