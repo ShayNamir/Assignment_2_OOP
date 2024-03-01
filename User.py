@@ -1,5 +1,4 @@
 
-
 from ImagePost import ImagePost
 from SalePost import SalePost
 from TextPost import TextPost
@@ -22,7 +21,10 @@ class User:
         self.__followers.add(user)
 
     def __remove_observer(self, user):
+        initial_length = len(user.__get_followers())
         user.__followers.discard(self)  # If self doesn't exist in user.__followers -> do nothing
+        final_length = len(user.__get_followers())
+        return initial_length != final_length  # Return True if the user is removed
 
     def notify_observers(self):
         # Send a notification to all followers
@@ -55,9 +57,8 @@ class User:
 
     def unfollow(self, user):
         if self.__is_log_in:  # Check if the user is logged in.
-            initial_length = len(user.__get_followers())
-            user.__remove_observer(self)  # If self doesn't exist in user.__followers -> do nothing
-            if len(user.__get_followers()) < initial_length:  # Check if the new user is added
+            has_removed =self.__remove_observer(user)  # If self doesn't exist in user.__followers -> do nothing
+            if has_removed:  # Check if the new user is added
                 print("{0} unfollowed {1}".format(self.get_name(), user.get_name()))
 
     def user_log_in(self):
@@ -124,6 +125,3 @@ class PostFactory:
             return SalePost(user, content, price, loc)
         else:
             return None  # Error
-
-
-
