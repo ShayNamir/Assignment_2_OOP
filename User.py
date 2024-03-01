@@ -21,8 +21,19 @@ class User:
     This function will get a user and follow him
     '''
 
-    def __add_follower(self, user):
+    def __add_observer(self, user):
         self.__followers.add(user)
+
+    def __remove_observer(self, user):
+        user.__followers.discard(self)  # If self doesn't exist in user.__followers -> do nothing
+
+    def notify_observers(self):
+        # Send a notification to all followers
+        for observer in self.__followers:
+            observer.update("{0} has a new post".format(self.get_name()))
+
+    def update(self, notification):
+        self.__notifications.append(notification)
 
     def __get_followers(self):
         return self.__followers
@@ -34,7 +45,7 @@ class User:
         if self.__is_log_in:  # Check if the user is logged in
             if self != user:  # Can't follow yourself
                 initial_length = len(user.__get_followers())
-                user.__add_follower(self)
+                user.__add_observer(self)
                 if len(user.__get_followers()) > initial_length:  # Check if the new user is added
                     print("{0} started following {1}".format(self.get_name(), user.get_name()))
 
@@ -48,7 +59,7 @@ class User:
     def unfollow(self, user):
         if self.__is_log_in:  # Check if the user is logged in.
             initial_length = len(user.__get_followers())
-            user.__followers.discard(self)  # If self doesn't exist in user.__followers -> do nothing
+            user.__remove_observer(self)  # If self doesn't exist in user.__followers -> do nothing
             if len(user.__get_followers()) < initial_length:  # Check if the new user is added
                 print("{0} unfollowed {1}".format(self.get_name(), user.get_name()))
 
